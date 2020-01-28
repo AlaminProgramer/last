@@ -29,15 +29,12 @@ class Register extends React.Component {
     this.state={
       username:'',
       email:'',
-      password:'',
       message:'',
-      role:"",
       isApproved:true,
       errors:{},
       noUser:'',
       link:'',
       imageName:'Choose Profile image',
-      date:'',
       file:''
     }
     this.onChange=this.onChange.bind(this);
@@ -53,19 +50,7 @@ class Register extends React.Component {
     formData.append('file' , this.state.file)
     formData.append('username',this.state.username )
     formData.append('email',this.state.email )
-    formData.append('role',this.state.role )
-    formData.append('password',this.state.password )
-    formData.append('password2',this.state.password2 )
-    formData.append('isApproved',this.state.isApproved )
     formData.append ('link', this.state.link)
-    // const newUser={
-    //   username:this.state.username,
-    //   email:this.state.email,
-    //   role:this.state.role,
-    //   password:this.state.password,
-    //   password2:this.state.password2,
-    //   isApproved:this.state.isApproved
-    // }
     axios.post('/api/users/register', formData )
     .then((data)=>{
       console.log(data.data)
@@ -78,22 +63,6 @@ class Register extends React.Component {
       })
       console.log(this.state)
     })
-  }
-  componentDidMount() {
-    const date=new Date()
-    const dd=date.getDate()
-    const mm=date.getMonth()
-    const yy=date.getFullYear
-    const today= dd+'-'+mm+'-'+yy
-    this.setState({date:today})
-    if(this.props.location.search){
-      var query = queryString.parse(this.props.location.search);
-      if (query.token) {
-        localStorage.setItem("token", query.token);
-        window.location.href="/"
-      }
-    }
-    console.log(this.state)
   }
   
   onFileChoose(event){
@@ -113,7 +82,7 @@ class Register extends React.Component {
             <Col  lg={{ size: 6, order: 2, offset: 0 }} md="6">
               <Card>
                 <CardHeader>
-                  <h3 className="title text-center">Registration Form </h3>
+                  <h3 className="title text-center">Update your Profile information </h3>
                 </CardHeader>
                 <CardBody>
                   <Form onSubmit={this.onSubmit} >
@@ -187,100 +156,11 @@ class Register extends React.Component {
                         </FormGroup>
                       </Col>
                     </Row>
-                    <Row>
-                      <Col className="px-md-1" md="6">
-                        <FormGroup>
-                          <label>Password</label>
-                          <Input
-                            placeholder="Password"
-                          className={this.state.errors.password? "is-invalid ":''}
-                          type="password"
-                            name='password'
-                            value={this.state.password}
-                            onChange={this.onChange}
-                          />
-
-                          {this.state.errors.password ?
-                          <span className="text-danger"> {this.state.errors.password} </span>
-                          :''
-                          }
-                        </FormGroup>
-                      </Col>
-
-                      <Col className="pl-md-1" md="6">
-                        <FormGroup>
-                          <label>Confirm Password</label>
-                          <Input
-                          className={this.state.errors.password2? "is-invalid ":''}
-                          placeholder="Confirm Password"
-                            type="password"
-                            name='password2'
-                            value={this.state.password2}
-                            onChange={this.onChange}
-                          />
-
-                          {this.state.errors.password2 ?
-                          <span className="text-danger"> {this.state.errors.password2} </span>
-                          :''
-                          }
-                        </FormGroup>
-                      </Col>
-                      <Col md="12 " className="pt-2 pb-2">
-                      <h4 >Please choose your type</h4>
-
-                      </Col>
-                      <Col onChange={this.onChange} className="pl-md-1 mentee " md="6">
-                        <FormGroup>
-                          <Input
-                            type="radio"
-                            id="mentor"
-                            name="role"
-                            value="mentor"
-                          />
-                          <label className="fs" htmlFor="mentor"> <h5>Mentor</h5></label>
-                          <Input
-                            type="radio"
-                            id="mentee"
-                            name="role"
-                            value="mentee"
-                          />
-                          <label htmlFor="mentee" className="fs"> <h5>Mentee</h5></label>
-                        </FormGroup>
-                      </Col>
-                      {this.state.errors.role ?
-                          <span className="text-danger"> {this.state.errors.role} </span>
-                          :''
-                      }
-                    </Row>
                     <CardFooter>
-                      <Button  className="btn-fill" color="primary" type="submit">
-                        Sign Up
-                      </Button>
+                      <Button  className="btn-fill" color="primary" type="submit">  Update Profile </Button>
                     </CardFooter>
                   </Form>
                 </CardBody>
-                <h6 className="text-center ">Or , Sign Up With </h6>
-
-                <div className="title text-center">
-                    <a href="http://localhost:5000/auth/facebook" className="authButton">
-                      <Button className="btn-icon btn-round" color="facebook">
-                        <i className="fab fa-facebook" />
-                      </Button>
-                    </a>
-                    <a href="http://localhost:5000/auth/google" className="authButton">
-                      <Button className="btn-icon btn-round" color="google">
-                        <i className="fab fa-google-plus" />
-                      </Button>
-                    </a>
-                    <a href="http://localhost:5000/auth/linkedin" className="authButton">
-                      <Button className="btn-icon btn-round" color="google">
-                      <i class="fab fa-linkedin"></i>
-                      </Button>
-                    </a>
-                    <br/>
-                    <span className="pt-2 pb-2">Allready  have accout ? go to <Link to="/login">Login </Link></span>
-
-                  </div>
               </Card>
             </Col>
             <Col md="3"></Col>

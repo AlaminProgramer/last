@@ -1,7 +1,7 @@
 const validator=require('validator');
 const isEmpty = require('./is-empty');
 
-module.exports=function validateRegisterInput(data){
+module.exports=function validateRegisterInput(data, file){
 	let errors={};
 
 	data.name=!isEmpty(data.username)? data.username:'';
@@ -9,6 +9,7 @@ module.exports=function validateRegisterInput(data){
 	data.password=!isEmpty(data.password)? data.password:'';
 	data.password2=!isEmpty(data.password2)? data.password2:'';
 	data.role=!isEmpty(data.role)?data.role:''
+	data.link=!isEmpty(data.link)?data.link:''
 
 	if(!validator.isLength(data.username, { min:2, max:30})){
 		errors.name='Username must be between 2 and 30 characters';
@@ -34,6 +35,9 @@ module.exports=function validateRegisterInput(data){
 	}
 	if(validator.isEmpty(data.role)){
 		errors.role="Please select a type !"
+	}
+	if(validator.isEmpty(data.link)){
+		errors.link="Please select a link !"
 	}
 	return {
 		errors,

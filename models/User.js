@@ -5,9 +5,10 @@ const userSchema=new Schema({
 	image:{
 		type:String
 	},
-	userId:{
+	link:{
 		type:String
 	},
+	userId:mongoose.Types.ObjectId,
 	username:{
 		type:String,
 		require:true
@@ -27,8 +28,7 @@ const userSchema=new Schema({
 		type:Boolean
 	},
 	date:{
-		type:Date,
-		default:Date.now
+		type:String
 	}
 },{
 	collection:"users"

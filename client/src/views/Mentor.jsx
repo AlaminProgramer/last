@@ -22,6 +22,7 @@ class Mentor extends React.Component {
     }
   }
   componentDidMount(){
+    var count=0
       axios.get('/api/users/mentor')
       .then(user=>{
           console.log(user)
@@ -30,6 +31,13 @@ class Mentor extends React.Component {
           })
       })
       .catch(err=>console.log(err));
+      setTimeout(() => {
+        this.state.user.forEach(single=>{
+          count=count+1
+        })
+        this.setState({count:count})
+
+      }, 1200);
   }
   delete(id) {
     axios.get('/api/users/delete/'+id)
@@ -51,7 +59,7 @@ class Mentor extends React.Component {
               <Card>
                 <CardHeader>
                   <Row>
-                    <Col md="6"><CardTitle tag="h4">All User</CardTitle></Col>
+                    <Col md="6"><CardTitle tag="h4">All Mentor <span   > (Total Mentee {this.state.count}</span> ) </CardTitle></Col>
                     <Col md="6"><CardTitle tag="h4"><Link to="/admin/addUser" style={{float:'right'}}></Link></CardTitle></Col>
                   </Row>
                 </CardHeader>

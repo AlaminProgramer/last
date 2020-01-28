@@ -18,10 +18,12 @@ class Mentee extends React.Component {
   constructor(){
     super();
     this.state={
-        user:[]
+        user:[],
+        count:''
     }
   }
   componentDidMount(){
+    var count=0
       axios.get('/api/users/mentee')
       .then(user=>{
           this.setState({
@@ -29,6 +31,12 @@ class Mentee extends React.Component {
           })
       })
       .catch(err=>console.log(err));
+      setTimeout(() => {
+        this.state.user.forEach(single=>{
+          count=count+1
+        })
+        this.setState({count:count})
+      }, 1200);
   }
   delete(id) {
     axios.get('/api/users/delete/'+id)
@@ -56,7 +64,7 @@ class Mentee extends React.Component {
               <Card>
                 <CardHeader>
                   <Row>
-                    <Col md="6"><CardTitle tag="h4"><span className="text-bold ">All Mentee</span></CardTitle></Col>
+                    <Col md="6"><CardTitle tag="h4"><span className="text-bold ">All Mentee (Total Mentee {this.state.count}) </span></CardTitle></Col>
                     <Col md="6"><CardTitle tag="h4"><Link to="/admin/addUser" style={{float:'right'}}></Link></CardTitle></Col>
                   </Row>
                 </CardHeader>

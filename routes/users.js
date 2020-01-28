@@ -30,51 +30,58 @@ const upload=multer({
 	},
 	limits:{fileSize:1024*1024*5}
 })
-router.post('/register',upload.single('file'), (req,res)=>{
-	const {errors, isValid}=validateRegisterInput(req.body);
-	console.log(req.file)
-	console.log(req.body);
-    if(!isValid){
-    	return res.status(400).json(errors);
+router.post('/register',upload.single('file'), (req, res)=>{
+	console.log(req.body)
+	const {errors, isValid}=validateRegisterInput(req.body)
+	if(!isValid ){
+		return res.status(400).json(errors)
+	}else if(!req.file){
+		res.status(400).json({image:"Select a image"})
 	}
-	
-	if(!req.file){
-		return res.status(400).json({image:"Please select a Profile image"})
-	}
-	User.findOne({ email:req.body.email })
-	.then((user)=>{
+	const path=req.file.path
+	User.findOne({email:req.body.email})
+	.then(user=>{
 		if(user){
-			errors.email='Email already exits';
-			res.status(400).json(errors);
+			return res.status(400).json({email:"user  exist"})
 		}else{
-			const newUser= new User({
-				username    :req.file.username,
-				email   :req.file.email,
-				role    :req.file.role,
-				password:req.file.password,
-				image:req.file.path,
-				isApproved:req.file.isApproved
-			})
-			bcrypt.genSalt(10, (err,salt)=>{
-				bcrypt.hash(newUser.password,salt,(err,hash)=>{
-					if(err) throw err;
-					newUser.password=hash;
+			bcrypt.hash(req.body.password, 12,((err, hash)=>{
+				if(err){
+					console.log(err)
+					res.status(500).json({massage:"Server error occurd "})
+				}else{
+					const day= new Date()
+					const dd= day.getDate()
+					const mm= day.getMonth()+1
+					const yy= day.getFullYear()
+					const newDate= dd+'-'+mm+'-'+yy
+					const newUser=  new User({
+						image:path,
+						username:req.body.username,
+						email:req.body.email,
+						role:req.body.role,
+						password:hash,
+						isApproved:req.body.isApproved,
+						date:newDate,
+						link:req.body.link
+					})
 					newUser.save()
-					.then((user)=>{
-						res.json(user);
+					.then(user=>{
+						console.log(user)
+						res.json({massage:"user created success full "})
 					})
-					.catch((err)=>{
-						console.log(err);
+					.catch(err=>{
+						console.log(err)
 					})
-				})
-
-			})
+				}
+			}))
 		}
 	})
+	.catch(err=>{
+		console.log(err)
+		res.json({massage:"server error occurd "})
+	})
 })
-
 router.post('/login',(req,res)=>{
-
 	const {errors, isValid}=validateLoginInput(req.body);
 
     if(!isValid){
@@ -87,13 +94,13 @@ router.post('/login',(req,res)=>{
 	.then(user=>{
 		if(!user){
 			errors.email='User not found';
-			res.status(404).json(errors);
+		    return	res.status(404).json(errors);
 		}
 
-		bcrypt.compare(password, user.password)
+		bcrypt.compare(req.body.password, user.password)
 		.then(isMatch=>{
 			if(isMatch && user.isApproved){
-				const payload={id:user.id, email:user.email, role:user.role, name:user.username};
+				const payload={id:user.id, email:user.email, role:user.role, name:user.username, date:user.date, image:user.image, link:user.link};
 				jwt.sign(
 					payload,
 					keys.secretOrKey,
@@ -113,7 +120,11 @@ router.post('/login',(req,res)=>{
 				res.status(400).json(errors);
 			}
 		})
-	});
+	})
+	.catch(err=>{
+		console.log(err)
+		res.json({err:err})
+	})
 });
 
 router.get('/all', (req, res)=>{
@@ -159,7 +170,6 @@ router.get('/singleUser/:id',(req,res)=>{
 	})
 
 })
-
 
 router.get('/edit/:id',function(req, res) {
 	let id = req.params.id;

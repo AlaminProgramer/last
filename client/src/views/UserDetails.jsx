@@ -54,6 +54,8 @@ class UserDetails extends React.Component {
                     </a>
                     <p className="description"> {user.role} </p>
                     <p className="description"> {user.email} </p>
+                    <p className="description">Member Scince : {user.date} </p>
+                    <p className="description">Social Link : {user.link} </p>
                   </div>
                   <div className="card-description">
                   </div>

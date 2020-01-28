@@ -20,6 +20,7 @@ class UserProfile extends React.Component {
     const token=localStorage.getItem('token')
     if(token){
        userData=jwtDecode(token)
+       console.log(userData)
     }
 
     return (
@@ -39,12 +40,14 @@ class UserProfile extends React.Component {
                       <img
                         alt="..."
                         className="avatar"
-                        src={require("../assets/img/anime3.png")}
+                        src={userData.image}
                       />
                       <h5 className="title"> {userData.name} </h5>
                     </a>
                     <p className="description"> {userData.role} </p>
                     <p className="description"> {userData.email} </p>
+                    <p className="description"> Member Scince: {userData.date} </p>
+                    <p className="description"> Social Link: {userData.link} </p>
                   </div>
                   <div className="card-description">
                   </div>

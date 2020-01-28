@@ -28,8 +28,9 @@ class Header extends React.Component {
       color: "navbar-transparent",
       isLogin:true,
       avilable:null,
-      name:''
-      ,role:""
+      name:'',
+      image:'',
+      role:""
     };
   }
   componentDidMount() {
@@ -37,12 +38,12 @@ class Header extends React.Component {
     const token= localStorage.getItem('token')
     if(token){
           const decoded=jwtDecode(token)
-
     if(decoded.role=="admin" || decoded.role=="mentor"){
       this.setState({
         avilable:true,
         name:decoded.name,
-        role:decoded.role
+        role:decoded.role,
+        image: decoded.image
       })
     }
     }
@@ -139,7 +140,7 @@ class Header extends React.Component {
                 onClick={e => e.preventDefault()}
               >
                 <div className="photo">
-                  <img alt="..." src={require("../../assets/img/anime3.png")} />
+                  <img alt="..." src={this.state.image} />
                 </div>
                 <b className="caret d-none d-lg-block d-xl-block" />
 
@@ -158,6 +159,11 @@ class Header extends React.Component {
               <NavLink tag="li">
                   <DropdownItem className="nav-item">
                     <Link className="text-muted" to="/profile">  View Profile</Link>
+                  </DropdownItem>
+                </NavLink>
+                <NavLink tag="li">
+                  <DropdownItem className="nav-item">
+                    <Link className="text-muted" to="/admin/updateProfile"> Update Profile</Link>
                   </DropdownItem>
                 </NavLink>
                 <NavLink tag="li">

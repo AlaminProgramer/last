@@ -3,8 +3,8 @@ module.exports={
     googleClientSecret:'PrKHDjh16sSk6lU1dQnWD-Cs',
     facebookClientID:'2265400566918898',
     facebookClientSecret:'4cd52171ea017adf8850986297c4caab',
-    mongoURI:'mongodb://selim12:selim12@ds051788.mlab.com:51788/appdata',
-    // mongoURI:'mongodb//newPc:<newPc>@fiverr-sitlk.mongodb.net/test',
+    // mongoURI:'mongodb://selim12:selim12@ds051788.mlab.com:51788/appdata',
+    mongoURI:'mongodb://localhost/last',
     linkedinClientId:'818trgwk554g27',
     linkedinClientSecret:'QvwI4TVuKZtjeff9',
 	secretOrKey:'secret'
