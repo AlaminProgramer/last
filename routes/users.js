@@ -31,41 +31,46 @@ const upload=multer({
 	limits:{fileSize:1024*1024*5}
 })
 router.post('/register',upload.single('file'), (req,res)=>{
-	// const {errors, isValid}=validateRegisterInput(req.file);
+	const {errors, isValid}=validateRegisterInput(req.body);
 	console.log(req.file)
-    // if(!isValid){
-    // 	return res.status(400).json(errors);
-    // }
-	// User.findOne({ email:req.body.email })
-	// .then((user)=>{
-	// 	if(user){
-	// 		errors.email='Email already exits';
-	// 		res.status(400).json(errors);
-	// 	}else{
-	// 		const newUser= new User({
-	// 			username    :req.file.username,
-	// 			email   :req.file.email,
-	// 			role    :req.file.role,
-	// 			password:req.file.password,
-	// 			image:req.file.path,
-	// 			isApproved:req.file.isApproved
-	// 		})
-	// 		bcrypt.genSalt(10, (err,salt)=>{
-	// 			bcrypt.hash(newUser.password,salt,(err,hash)=>{
-	// 				if(err) throw err;
-	// 				newUser.password=hash;
-	// 				newUser.save()
-	// 				.then((user)=>{
-	// 					res.json(user);
-	// 				})
-	// 				.catch((err)=>{
-	// 					console.log(err);
-	// 				})
-	// 			})
+	console.log(req.body);
+    if(!isValid){
+    	return res.status(400).json(errors);
+	}
+	
+	if(!req.file){
+		return res.status(400).json({image:"Please select a Profile image"})
+	}
+	User.findOne({ email:req.body.email })
+	.then((user)=>{
+		if(user){
+			errors.email='Email already exits';
+			res.status(400).json(errors);
+		}else{
+			const newUser= new User({
+				username    :req.file.username,
+				email   :req.file.email,
+				role    :req.file.role,
+				password:req.file.password,
+				image:req.file.path,
+				isApproved:req.file.isApproved
+			})
+			bcrypt.genSalt(10, (err,salt)=>{
+				bcrypt.hash(newUser.password,salt,(err,hash)=>{
+					if(err) throw err;
+					newUser.password=hash;
+					newUser.save()
+					.then((user)=>{
+						res.json(user);
+					})
+					.catch((err)=>{
+						console.log(err);
+					})
+				})
 
-	// 		})
-	// 	}
-	// })
+			})
+		}
+	})
 })
 
 router.post('/login',(req,res)=>{

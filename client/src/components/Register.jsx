@@ -35,7 +35,7 @@ class Register extends React.Component {
       isApproved:true,
       errors:{},
       noUser:'',
-      imageName:'Choose image',
+      imageName:'Choose Profile image',
       file:''
     }
     this.onChange=this.onChange.bind(this);
@@ -73,6 +73,7 @@ class Register extends React.Component {
       this.setState({
         errors:err.response.data
       })
+      console.log(this.state)
     })
   }
   componentDidMount() {
@@ -111,6 +112,11 @@ class Register extends React.Component {
                         <div class="custom-file">
                           <input type="file" class="custom-file-input" id="customFile" onChange={this.onFileChoose} />
                           <label class="custom-file-label" for="customFile"> {this.state.imageName} </label>
+                          
+                          {this.state.errors.image ?
+                          <span className="text-danger"> {this.state.errors.image} </span>
+                          :''
+                          }
                         </div>
                       </Col>
                     </Row>
