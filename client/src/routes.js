@@ -6,6 +6,7 @@ import Mentor from './views/Mentor';
 import Mentee from './views/Mentee';
 import UserDetails from "./views/UserDetails.jsx";
 import changePassword from  './components/chagePassword'
+import UpdateProfile from './views/UpdateProfile'
 
 var routes={
   mentorRoutes:[
@@ -42,10 +43,18 @@ var routes={
       layout: "/admin"
     },
     {
+      path: "/updateProfile",
+      name: "Update Profile",
+      rtlName: "لوحة القيادة",
+      icon: "tim-icons icon-satisfied",
+      component: UpdateProfile,
+      layout: "/admin"
+    },
+    {
       path: "/user/:id",
       component: UserDetails,
       layout: "/admin"
-    }
+    },
   ],
   adminRoutes :[
     {
@@ -64,6 +73,7 @@ var routes={
       component: User,
       layout: "/admin"
     },
+
     {
       name:"New Admin",
       path: "/addUser",
@@ -77,6 +87,15 @@ var routes={
       rtlName: "لوحة القيادة",
       icon: "tim-icons icon-lock-circle",
       component: changePassword,
+      layout: "/admin"
+    },
+    ,
+    {
+      path: "/updateProfile",
+      name: "Update Profile",
+      rtlName: "لوحة القيادة",
+      icon: "tim-icons icon-satisfied",
+      component: UpdateProfile,
       layout: "/admin"
     },
     {

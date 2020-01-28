@@ -10,6 +10,7 @@ const validateRegisterInput=require('../validation/register');
 const validateLoginInput=require('../validation/login');
 const User=require('../models/User');
 const router=express.Router();
+const updateProfile=require('../validation/upodateProfile')
 
 const storage=multer.diskStorage({
 	destination:function(req, file , cb){
@@ -192,10 +193,33 @@ router.get('/edit/:id',function(req, res) {
 		})
 	})
   });
-
-
-  
-
+//   profile update 
+router.post ('/updateInfo/:id', upload.single('file'), (req, res)=>{
+	
+	let{ errors , isValid}=updateProfile(req.body)
+	if(!isValid){
+		return res.json(errors)
+	}
+	User.findByIdAndUpdate({_id:req.params.id})
+	.then(data=>{
+		data.username=req.body.username
+		data.email=req.body.email
+		data.link=req.body.link
+		data.save()
+		.then(result=>{
+			console.log(result)
+			res.status(200).json({massage:"profile updated"})
+		})
+		.catch(err=>{
+			console.log(err)
+			res.status(500).json({massage:"server error occurd"})
+		})
+	})
+	.catch(err=>{
+		console.log(err)
+		res.json({massge:"server error occurd"})
+	})
+})  
 router.post('/changePassword/:id' , (req,res)=>{
 	console.log(req.body)
 	const {oldPassword , newPassword , newPassword2nd }=req.body

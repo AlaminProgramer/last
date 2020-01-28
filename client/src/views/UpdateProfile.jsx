@@ -3,8 +3,7 @@ import axios from "axios";
 import queryString from "query-string";
 import  './style.css'
 import { Link} from 'react-router-dom'
-
-
+import jwtDecoder from 'jwt-decode'
 // reactstrap components
 import {
   Button,
@@ -21,20 +20,21 @@ import {
   CustomInput,
   FormFeedback
 } from "reactstrap";
-
-class Register extends React.Component {
+ class UpdateProfile extends React.Component {
   constructor(){
     super();
-
-    this.state={
+         this.state={
       username:'',
       email:'',
+      password:'',
       message:'',
+      role:"",
       isApproved:true,
       errors:{},
       noUser:'',
       link:'',
       imageName:'Choose Profile image',
+      date:'',
       file:''
     }
     this.onChange=this.onChange.bind(this);
@@ -46,23 +46,28 @@ class Register extends React.Component {
   }
   onSubmit(e){
     e.preventDefault();
-    const formData=new FormData()
-    formData.append('file' , this.state.file)
-    formData.append('username',this.state.username )
-    formData.append('email',this.state.email )
-    formData.append ('link', this.state.link)
-    axios.post('/api/users/register', formData )
-    .then((data)=>{
-      console.log(data.data)
-      //  this.props.history.push("/login")
-      console.log(data)
-    })
-    .catch(err=>{
-      this.setState({
-        errors:err.response.data
+     if(localStorage.getItem('token')){
+      let id=jwtDecoder(localStorage.getItem('token')).id
+
+      const formData=new FormData()
+      console.log(formData)
+      formData.append('file' , this.state.file)
+      formData.append('username',this.state.username )
+      formData.append('email',this.state.email )
+      formData.append ('link', this.state.link)
+      axios.post('/api/users/updateInfo/'+id, formData )
+      .then((data)=>{
+        console.log(data.data)
+        //  this.props.history.push("/login")
+        console.log(data)
       })
-      console.log(this.state)
-    })
+      .catch(err=>{
+        this.setState({
+          errors:err.response.data
+        })
+        console.log(err.response.data)
+      })
+     }
   }
   
   onFileChoose(event){
@@ -82,7 +87,7 @@ class Register extends React.Component {
             <Col  lg={{ size: 6, order: 2, offset: 0 }} md="6">
               <Card>
                 <CardHeader>
-                  <h3 className="title text-center">Update your Profile information </h3>
+                  <h3 className="title text-center">Update your Profile </h3>
                 </CardHeader>
                 <CardBody>
                   <Form onSubmit={this.onSubmit} >
@@ -131,9 +136,7 @@ class Register extends React.Component {
                           <span className="text-danger"> {this.state.errors.name} </span>
                           :''
                           }
-                        </FormGroup>
-
-                      </Col>
+                        </FormGroup>                      </Col>
                       <Col className="pl-md-1" md="6">
                         <FormGroup>
                           <label htmlFor="email">
@@ -147,9 +150,7 @@ class Register extends React.Component {
                             name='email'
                             value={this.state.email}
                             onChange={this.onChange}
-                          />
-
-                          {this.state.errors.email ?
+                          />                          {this.state.errors.email ?
                           <span className="text-danger"> {this.state.errors.email} </span>
                           :''
                           }
@@ -157,7 +158,7 @@ class Register extends React.Component {
                       </Col>
                     </Row>
                     <CardFooter>
-                      <Button  className="btn-fill" color="primary" type="submit">  Update Profile </Button>
+                      <Button  className="btn-fill" color="primary" type="submit">Update Profile</Button>
                     </CardFooter>
                   </Form>
                 </CardBody>
@@ -170,4 +171,4 @@ class Register extends React.Component {
   }
 }
 
-export default Register;
+export default UpdateProfile

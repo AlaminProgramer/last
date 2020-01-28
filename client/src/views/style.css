@@ -1,0 +1,17 @@
+.mentee label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    min-width: 75px;
+    margin-left: 48px;
+    cursor: pointer;
+    font-size: 35px;
+}
+
+.mentee input{
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.react-calendar__tile {
+    background: #27293D !important;
+}

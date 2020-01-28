@@ -19,6 +19,7 @@ import {
 } from "reactstrap";
 
 import isAuthenticated from '../common/auth.js'
+import Axios from "axios";
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -33,7 +34,23 @@ class Header extends React.Component {
       role:""
     };
   }
+
   componentDidMount() {
+    let id
+    if(localStorage.getItem('token')){
+      let decoded=jwtDecode(localStorage.getItem('token'))
+      id=decoded.id
+      Axios.get('/api/users/singleUser/'+id)
+      .then(data=>{ 
+        this.setState({
+          image:data.data.image
+        })
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    }
+    Axios.get('/singleUser/:id')
     window.addEventListener("resize", this.updateColor);
     const token= localStorage.getItem('token')
     if(token){
@@ -48,7 +65,7 @@ class Header extends React.Component {
     }
     }
     
-
+console.log(this.state)
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateColor);
@@ -86,6 +103,13 @@ class Header extends React.Component {
     this.props.history.push('/login');
   }
   render() {
+    var userData
+    const token=localStorage.getItem('token')
+    if(token){
+       userData=jwtDecode(token)
+       console.log(userData)
+    }
+
     const auth=isAuthenticated();
     const authLinks=(
       <Container fluid>
@@ -140,7 +164,11 @@ class Header extends React.Component {
                 onClick={e => e.preventDefault()}
               >
                 <div className="photo">
-                  <img alt="..." src={this.state.image} />
+                  {userData?
+                  <img alt="..." src={'/'+userData.image} />
+                    :''
+                  }
+
                 </div>
                 <b className="caret d-none d-lg-block d-xl-block" />
 
