@@ -28,6 +28,9 @@ class UserDetails extends React.Component {
                user:user.data
            })
        })
+       .catch(err=>{
+         console.log(err)
+       })
     }
   render() {
     const user=this.state.user;
@@ -48,7 +51,8 @@ class UserDetails extends React.Component {
                       <img
                         alt="..."
                         className="avatar"
-                        src={require("../assets/img/anime3.png")}
+                        src={'/'+this.state.user.image}
+                        // src={require("../assets/img/anime3.png")}
                       />
                       <h5 className="title"> {user.username} </h5>
                     </a>

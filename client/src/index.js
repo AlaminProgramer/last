@@ -14,6 +14,7 @@ import Header from './components/Navbars/Header.jsx'
 import "./assets/scss/black-dashboard-react.scss";
 import "./assets/demo/demo.css";
 import "./assets/css/nucleo-icons.css";
+
 import UserProfile from './views/UserProfile'
 import chagePassword from './components/chagePassword'
 
@@ -36,7 +37,7 @@ ReactDOM.render(
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
         <Route path ="/profile" component={UserProfile} />
-        {/* <Route path ="/changePassword" component={chagePassword} /> */}
+        <Route path ="/changePassword" component={chagePassword} />
         <ProtectedRoute path="/" exact component={Home} />
         <PrivateRoute path="/admin" component={AdminLayout} />
         <Route path="/" component={PageNotFound} />

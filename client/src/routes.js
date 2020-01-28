@@ -19,14 +19,6 @@ var routes={
       layout: "/admin"
     },
     {
-      path: "/changePassword",
-      name: "Change password",
-      rtlName: "لوحة القيادة",
-      icon: "tim-icons icon-lock-circle",
-      component: changePassword,
-      layout: "/admin"
-    },
-    {
       path: "/mentor",
       name: "Mentor",
       rtlName: "لوحة القيادة",
@@ -42,11 +34,16 @@ var routes={
       component: Mentee,
       layout: "/admin"
     },
+    // {
+    //   path: "/changePassword",
+    //   name: "Change password",
+    //   rtlName: "لوحة القيادة",
+    //   icon: "tim-icons icon-lock-circle",
+    //   component: changePassword,
+    //   layout: "/admin"
+    // },
     {
       path: "/updateProfile",
-      name: "Update Profile",
-      rtlName: "لوحة القيادة",
-      icon: "tim-icons icon-satisfied",
       component: UpdateProfile,
       layout: "/admin"
     },
@@ -73,7 +70,6 @@ var routes={
       component: User,
       layout: "/admin"
     },
-
     {
       name:"New Admin",
       path: "/addUser",
@@ -81,20 +77,17 @@ var routes={
       icon: "tim-icons icon-simple-add",
       layout: "/admin"
     },
-    {
-      path: "/changePassword",
-      name: "Change password",
-      rtlName: "لوحة القيادة",
-      icon: "tim-icons icon-lock-circle",
-      component: changePassword,
-      layout: "/admin"
-    },
+    // {
+    //   path: "/changePassword",
+    //   name: "Change password",
+    //   rtlName: "لوحة القيادة",
+    //   icon: "tim-icons icon-lock-circle",
+    //   component: changePassword,
+    //   layout: "/admin"
+    // },
     ,
     {
       path: "/updateProfile",
-      name: "Update Profile",
-      rtlName: "لوحة القيادة",
-      icon: "tim-icons icon-satisfied",
       component: UpdateProfile,
       layout: "/admin"
     },

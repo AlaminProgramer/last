@@ -164,11 +164,7 @@ console.log(this.state)
                 onClick={e => e.preventDefault()}
               >
                 <div className="photo">
-                  {userData?
-                  <img alt="..." src={'/'+userData.image} />
-                    :''
-                  }
-
+                  <img alt="..." src={'/' +this.state.image} />
                 </div>
                 <b className="caret d-none d-lg-block d-xl-block" />
 

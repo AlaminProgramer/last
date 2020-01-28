@@ -13,8 +13,28 @@ import {
   Row,
   Col
 } from "reactstrap";
+import Axios from "axios";
 
 class UserProfile extends React.Component {
+  state={
+    image:''
+  }
+
+  componentDidMount(){
+    if(localStorage.getItem('token')){
+      let id=jwtDecode(localStorage.getItem('token')).id
+      Axios.get('/api/users/singleUser/'+id)
+      .then(data=>{
+        this.setState({
+          image:data.data.image
+        })
+      })
+      .catch(err=>{
+        console.log('erorr occurd', err)
+      })
+    }
+    // console.log(this.state)
+  }
   render() {
     var userData
     const token=localStorage.getItem('token')
@@ -40,7 +60,7 @@ class UserProfile extends React.Component {
                       <img
                         alt="..."
                         className="avatar"
-                        src={userData.image}
+                        src={'/'+this.state.image}
                       />
                       <h5 className="title"> {userData.name} </h5>
                     </a>

@@ -192,19 +192,27 @@ router.get('/edit/:id',function(req, res) {
 		  console.log(err);
 		})
 	})
-  });
-//   profile update 
+});
+
+
+
+
+
 router.post ('/updateInfo/:id', upload.single('file'), (req, res)=>{
 	
 	let{ errors , isValid}=updateProfile(req.body)
 	if(!isValid){
-		return res.json(errors)
+		return res.status(400).json(errors)
+	}
+	if(!req.file){
+		return res.status(400).json({image:"Select an image"})
 	}
 	User.findByIdAndUpdate({_id:req.params.id})
 	.then(data=>{
 		data.username=req.body.username
 		data.email=req.body.email
 		data.link=req.body.link
+		data.image=req.file.path
 		data.save()
 		.then(result=>{
 			console.log(result)
