@@ -43,7 +43,8 @@ class Header extends React.Component {
       Axios.get('/api/users/singleUser/'+id)
       .then(data=>{ 
         this.setState({
-          image:data.data.image
+          image:data.data.image,
+          name:data.data.username
         })
       })
       .catch(err=>{
@@ -164,6 +165,7 @@ console.log(this.state)
                 onClick={e => e.preventDefault()}
               >
                 <div className="photo">
+                  
                   <img alt="..." src={'/' +this.state.image} />
                 </div>
                 <b className="caret d-none d-lg-block d-xl-block" />

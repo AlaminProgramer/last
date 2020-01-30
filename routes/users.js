@@ -36,10 +36,7 @@ router.post('/register',upload.single('file'), (req, res)=>{
 	const {errors, isValid}=validateRegisterInput(req.body)
 	if(!isValid ){
 		return res.status(400).json(errors)
-	}else if(!req.file){
-		res.status(400).json({image:"Select a image"})
 	}
-	const path=req.file.path
 	User.findOne({email:req.body.email})
 	.then(user=>{
 		if(user){
@@ -56,7 +53,7 @@ router.post('/register',upload.single('file'), (req, res)=>{
 					const yy= day.getFullYear()
 					const newDate= dd+'-'+mm+'-'+yy
 					const newUser=  new User({
-						image:path,
+						image:'',
 						username:req.body.username,
 						email:req.body.email,
 						role:req.body.role,

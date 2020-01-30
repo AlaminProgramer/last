@@ -32,7 +32,7 @@ class Register extends React.Component {
       password:'',
       message:'',
       role:"",
-      isApproved:true,
+      isApproved:false,
       errors:{},
       noUser:'',
       link:'',
@@ -50,7 +50,6 @@ class Register extends React.Component {
   onSubmit(e){
     e.preventDefault();
     const formData=new FormData()
-    formData.append('file' , this.state.file)
     formData.append('username',this.state.username )
     formData.append('email',this.state.email )
     formData.append('role',this.state.role )
@@ -116,33 +115,6 @@ class Register extends React.Component {
                 <CardBody>
                   <Form onSubmit={this.onSubmit} >
                   <Row>
-                      <Col className="px-md-1" md="6">
-                        <div class="custom-file">
-                          <input type="file" class="custom-file-input" id="customFile" onChange={this.onFileChoose} />
-                          <label class="custom-file-label" for="customFile"> {this.state.imageName} </label>
-                          
-                          {this.state.errors.image ?
-                          <span className="text-danger"> {this.state.errors.image} </span>
-                          :''
-                          }
-                        </div>
-                      </Col>
-                      <Col className="px-md-1" md="6">
-                        <FormGroup>
-                          <Input
-                          className={this.state.errors.link? "is-invalid ":''}
-                            placeholder="Social link"
-                            type="text"
-                            name='link'
-                            value={this.state.link}
-                            onChange={this.onChange}
-                          />
-                          {this.state.errors.link ?
-                          <span className="text-danger"> {this.state.errors.link} </span>
-                          :''
-                          }
-                        </FormGroup>
-                      </Col>
                     </Row>
                     <Row>
                       <Col className="px-md-1" md="6">
@@ -186,7 +158,7 @@ class Register extends React.Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col className="px-md-1" md="6">
+                      <Col className="px-md-1" md="4">
                         <FormGroup>
                           <label>Password</label>
                           <Input
@@ -205,7 +177,7 @@ class Register extends React.Component {
                         </FormGroup>
                       </Col>
 
-                      <Col className="pl-md-1" md="6">
+                      <Col className="pl-md-1" md="4">
                         <FormGroup>
                           <label>Confirm Password</label>
                           <Input
@@ -219,6 +191,25 @@ class Register extends React.Component {
 
                           {this.state.errors.password2 ?
                           <span className="text-danger"> {this.state.errors.password2} </span>
+                          :''
+                          }
+                        </FormGroup>
+                      </Col>
+                      
+                      <Col className="px-md-1" md="4">
+                        <FormGroup>
+                        <label>Enter Social link</label>
+
+                          <Input
+                          className={this.state.errors.link? "is-invalid ":''}
+                            placeholder="Social link"
+                            type="text"
+                            name='link'
+                            value={this.state.link}
+                            onChange={this.onChange}
+                          />
+                          {this.state.errors.link ?
+                          <span className="text-danger"> {this.state.errors.link} </span>
                           :''
                           }
                         </FormGroup>

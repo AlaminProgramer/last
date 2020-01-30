@@ -17,7 +17,14 @@ import Axios from "axios";
 
 class UserProfile extends React.Component {
   state={
-    image:''
+    image:'',
+    name:'',
+    email:'',
+    role:'',
+    date:'',
+    link:''
+
+
   }
 
   componentDidMount(){
@@ -26,7 +33,12 @@ class UserProfile extends React.Component {
       Axios.get('/api/users/singleUser/'+id)
       .then(data=>{
         this.setState({
-          image:data.data.image
+          image:data.data.image,
+          name:data.data.username,
+          email:data.data.email,
+          role:data.data.role,
+          date:data.data.date,
+          link:data.data.link,
         })
       })
       .catch(err=>{
@@ -62,12 +74,12 @@ class UserProfile extends React.Component {
                         className="avatar"
                         src={'/'+this.state.image}
                       />
-                      <h5 className="title"> {userData.name} </h5>
+                      <h5 className="title"> Name: {this.state.name} </h5>
                     </a>
-                    <p className="description"> {userData.role} </p>
-                    <p className="description"> {userData.email} </p>
-                    <p className="description"> Member Scince: {userData.date} </p>
-                    <p className="description"> Social Link: {userData.link} </p>
+                    <p className="description"> {this.state.role} </p>
+                    <p className="description"> {this.state.email} </p>
+                    <p className="description"> Member Scince: {this.state.date} </p>
+                    <p className="description"> Social Link: {this.state.link} </p>
                   </div>
                   <div className="card-description">
                   </div>

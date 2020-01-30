@@ -58,7 +58,7 @@ import {
       axios.post('/api/users/updateInfo/'+id, formData )
       .then((data)=>{
         console.log(data.data)
-        //  this.props.history.push("/login")
+         this.props.history.push("/")
         console.log(data)
       })
       .catch(err=>{
